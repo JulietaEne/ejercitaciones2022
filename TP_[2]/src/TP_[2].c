@@ -27,9 +27,9 @@ int main(void) {
 	//ePassenger unPasajero;
 	ePassenger arrayPasajeros[MAX_PASAJEROS];//= {{14,"julieta","nakasone",45.5,"tcpx1403",1,1},{15,"lau","rancho",45.5,"tcpx1403",1,1}};
 	int id;
-	char oneName[LEN_STR];
+	char oneName[LEN_STR]={"julieta"};
 	char oneLastName[LEN_STR]={"nakasone"};
-	float onePrice = 5.6;
+	float onePrice = 15000;
 	int oneTypePassager= 1;
 	char oneFlyCode[10]={"XFG13"};
 
@@ -43,7 +43,8 @@ int main(void) {
 	//if(passenger_getName(listPassenger, sizeListPassenger, name, lenName, unaPosicion))
 	{
 		printf("entramos a agregar pasajero\n");
-		if(passenger_getName(oneName, LEN_STR)==1&& passenger_getLastName(oneLastName, LEN_STR)==1)
+
+		if(passenger_getTypePassenger(&oneTypePassager)>0)//passenger_getFlyCode(oneFlyCode, 10)==1 && passenger_getPrice(&onePrice)>0 && passenger_getName(oneName, LEN_STR)==1&& passenger_getLastName(oneLastName, LEN_STR)==1)
 		{
 			passenger_addPassenger(arrayPasajeros, MAX_PASAJEROS, id, oneName,oneLastName,onePrice,oneTypePassager, oneFlyCode);
 			passenger_print(arrayPasajeros, MAX_PASAJEROS);

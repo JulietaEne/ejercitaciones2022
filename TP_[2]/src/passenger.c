@@ -18,7 +18,10 @@
 #define SIZE_STR 51
 #define REINTENTOS 2
 #define SIZE_CODE 10
-
+#define MAX_PRICE 200000
+#define MIN_PRICE 15000
+#define MAX_TYPEPASSENGER 5
+#define MIN_TYPEPASSENGER 1
 
 /** \brief To indicate that all position in the array are empty,
 * 		this function put the flag (isEmpty) in TRUE in all
@@ -173,6 +176,88 @@ int passenger_getLastName(char lastName[], int sizeName)
 	return retorno;
 }
 
+/*
+ * \breif interactua con el usuario para solicitar el nombre del cliente
+ * \param listPassenger recibe el array dentro del cual se encuentra el elemento
+ * \param unaPosicion Recibe por valor el indice sobre el cual se asignara el dato
+ * \param name[] Recibe por referencia el array sobre el cual trabajara
+ * \param sizeName tamaño del array de name
+ * \return retorna -1 si hubo un error en los parametros recibidos
+ * 		   retorna >0 (el valor ingresado) si opero correctamente
+ *
+ */
+float passenger_getPrice(float* onePrice)
+{
+	//float retorno;
+	float auxPrice;
+	auxPrice=-1;
+
+	if(onePrice!= NULL)
+	{
+		auxPrice =0;
+		if(!utn_GetNumeroFloat(&auxPrice, "precio: ", "ingrese un dato valido", MIN_PRICE, MAX_PRICE, REINTENTOS))
+		{
+			*onePrice=auxPrice;
+		}
+	}
+
+	return auxPrice;
+}
+
+/*
+ * \breif interactua con el usuario para solicitar el nombre del cliente
+ * \param listPassenger recibe el array dentro del cual se encuentra el elemento
+ * \param unaPosicion Recibe por valor el indice sobre el cual se asignara el dato
+ * \param name[] Recibe por referencia el array sobre el cual trabajara
+ * \param sizeName tamaño del array de name
+ * \return retorna -1 si hubo un error en los parametros recibidos
+ * 		   retorna >0 (el valor ingresado) si opero correctamente
+ *
+ */
+int passenger_getFlyCode(char* oneFlyCode, int sizeCode)
+{
+	int retorno;
+	char auxOneFlyCode[sizeCode];
+	retorno=-1;
+	if(oneFlyCode!= NULL && sizeCode > 0)
+	{
+		retorno = 0;
+		if(!utn_getAlfaNumerica(auxOneFlyCode, sizeCode, "ingrese codigo de vuelo: ", "ingrese un codigo valido", REINTENTOS))//QUE HAY QUE TENER EN CUENTA PARA VALIDAR EL CODIGO ????
+		{
+			//si el codigo responde a la validacion de un codigo de vuelo
+			strncpy(oneFlyCode, auxOneFlyCode, sizeCode);
+			retorno=1;
+		}
+	}
+	return retorno;
+}
+
+/*
+ * \breif interactua con el usuario para solicitar el nombre del cliente
+ * \param listPassenger recibe el array dentro del cual se encuentra el elemento
+ * \param unaPosicion Recibe por valor el indice sobre el cual se asignara el dato
+ * \param name[] Recibe por referencia el array sobre el cual trabajara
+ * \param sizeName tamaño del array de name
+ * \return retorna -1 si hubo un error en los parametros recibidos
+ * 		   retorna >0 (el valor ingresado) si opero correctamente
+ *
+ */
+int passenger_getTypePassenger(int* oneTypePassenger)
+{
+	int auxType;
+	auxType = -1;
+	if(oneTypePassenger!= NULL)
+	{
+		auxType=0;
+		if(!utn_GetNumeroInt(&auxType, "tipo de pasajero: ", "ingrese dato valido", MIN_TYPEPASSENGER, MAX_TYPEPASSENGER, REINTENTOS))
+		{
+			*oneTypePassenger=auxType;
+		}
+	}
+	return auxType;
+}
+
+
 /** \brief find a Passenger by Id en returns the index position in array.
 *
 * \param list Passenger*
@@ -234,13 +319,13 @@ int passenger_print(ePassenger* listPassenger, int sizeListPassenger)
 		retorno = 0;
 		for(i=0; i<sizeListPassenger; i++)
 		{
-			if(i==0)
-			{
-				printf("id\tnombre\t\tapellido\tprecio\t\tcodigo vuelo\ttipo pasajero\n");
-			}
 			if(esDistintoDeInicial(listPassenger[i].isEmpty,IS_EMPTY))
 			{
-				printf("DEBUG** print pasajeros\n");
+				if(i==0)
+				{
+					printf("id\tnombre\t\tapellido\tprecio\t\tcodigo vuelo\ttipo pasajero\n");
+				}
+				//printf("DEBUG** print pasajeros\n");
 				passenger_printOnePosition(listPassenger, i);
 			}
 		}
@@ -257,8 +342,9 @@ int passenger_printOnePosition(ePassenger* listPassenger, int onePosition)
 	{
 		retorno = 0;
 
-		printf("DEBUG*** print un pasajero\n");
-		printf("%s %s %10.2f %10s %10d\n",
+		//printf("DEBUG*** print un pasajero\n");
+		printf("%d %13s %16s %15.2f %12s %11d\n",
+						listPassenger[onePosition].id,
 						listPassenger[onePosition].name,
 						listPassenger[onePosition].lastName,
 						listPassenger[onePosition].price,

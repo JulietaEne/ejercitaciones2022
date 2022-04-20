@@ -23,6 +23,9 @@ int passenger_initAPossition(ePassenger* listPassenger, int sizeListPassenger, i
 int passenger_addPassenger(ePassenger* listPassenger, int sizeListPassenger, int id, char name[],char lastName[],float price,int typePassenger, char flycode[]);
 int passenger_getName(char name[], int sizeName);
 int passenger_getLastName(char lastName[], int sizeName);
+float passenger_getPrice(float* onePrice);
+int passenger_getFlyCode(char* oneFlyCode, int sizeCode);
+int passenger_getTypePassenger(int* oneTypePassenger);
 /*int findPassengerById(Passenger* list, int len,int id);
 int removePassenger(Passenger* list, int len, int id);
 int sortPassengers(Passenger* list, int len, int order);*/
