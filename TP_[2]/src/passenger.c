@@ -13,9 +13,11 @@
 #include "validaciones.h"
 #include "passenger.h"
 
-#define VALUE_INIT 0
+#define IS_EMPTY 0
+#define NOT_EMPTY 1
 #define SIZE_STR 51
 #define REINTENTOS 2
+#define SIZE_CODE 10
 
 
 /** \brief To indicate that all position in the array are empty,
@@ -30,16 +32,16 @@ int passenger_initArray(ePassenger* listPassenger, int sizeListPassenger)
 {
 	int retorno;
 	int i;
-		retorno = -1;
+	retorno = -1;
 
-		if(listPassenger != NULL && sizeListPassenger>0)
+	if(listPassenger != NULL && sizeListPassenger>0)
+	{
+		retorno = 0;
+		for (i=0; i<sizeListPassenger; i++)
 		{
-			retorno = 0;
-			for (i=0; i<sizeListPassenger; i++)
-			{
-				passenger_initAPossition(listPassenger, i, VALUE_INIT);
-			}
+			passenger_initAPossition(listPassenger, i, IS_EMPTY);
 		}
+	}
 	return retorno;
 }
 
@@ -79,38 +81,97 @@ int passenger_initAPossition(ePassenger* listPassenger, int sizeListPassenger, i
 * \param flycode[] char
 * \return int Return (-1) if Error [Invalid length or NULL pointer or without
 * \free space] - (0) if Ok
-
-int addPassenger(Passenger* list, int len, int id, char name[],char lastName[],float price,int typePassenger, char flycode[])
+*/
+int passenger_addPassenger(ePassenger* listPassenger, int sizeListPassenger, int id, char name[],char lastName[],float price,int typePassenger, char flycode[])
 {
-	return -1;
-}*/
+	int retorno;
+	int i;
+	retorno = -1;
+	if( listPassenger!= NULL && sizeListPassenger >0 && name != NULL)// && lastName != NULL && flycode != NULL)
+	{
+		retorno=0;
+		//tiene que recorrer el array hasta encontrar el primer espacio libre
+		for (i=0; i<sizeListPassenger; i++)
+		{
+			if(estaVacio(listPassenger[i].isEmpty, IS_EMPTY))//si está libre, cargo los elementos recibidos por parametro
+			{
+				//printf("DEBUG**** i=%d -name: %s - lastame: %s\n",i, name, lastName);
+				strncpy(listPassenger[i].name, name, SIZE_STR);
+				strncpy(listPassenger[i].lastName, lastName, SIZE_STR);
+				listPassenger[i].id = id;//este id proviene de una variable autoincremental
+				listPassenger[i].price = price;
+				listPassenger[i].typePassenger = typePassenger;
+				strncpy(listPassenger[i].flycode, flycode, SIZE_CODE);
+				listPassenger[i].isEmpty = NOT_EMPTY;
+				//printf("DEBUG**** i=%d -name: %s - lastame: %s\n",i, listPassenger[i].name, listPassenger[i].lastName);
+			}
+			else
+			{
+				tp_MensajeError("No hay espacio para nuevas cargas");
+			}
+			break;
+		}
+	}
+	return retorno;
+}
 
 /*
  * \breif interactua con el usuario para solicitar el nombre del cliente
- * \param name[] Recibe por referencia el array sobre el cual trabajara
- * \param lenName Recibe por valor el dato que se asigna
+ * \param listPassenger recibe el array dentro del cual se encuentra el elemento
  * \param unaPosicion Recibe por valor el indice sobre el cual se asignara el dato
+ * \param name[] Recibe por referencia el array sobre el cual trabajara
+ * \param sizeName tamaño del array de name
  * \return retorna -1 si hubo un error en los parametros recibidos
- * 		   retorna 0 si opero exitosamente
+ * 		   retorna 0 si recibio los parametros correctamente
+ * 		   retorna 1 si opero exitosamente
  *
-
-int passenger_getName(char name[], int lenName, int unaPosicion)
+ */
+int passenger_getName(char name[], int sizeName)
 {
 	int retorno;
-	char auxName [lenName];
+	char auxName [sizeName];
 	retorno =-1;
-	if(name!= NULL && lenName>0 && unaPosicion >=0)
+	if(name!= NULL && sizeName>0)
 	{
 		retorno = 0;
-		if(		!utn_ingresarAlfabetica(auxName, lenName, "Ingrese nombre de cliente: ", "ERROR, ingrese un dato valido", REINTENTOS)
-				&& validaciones_esNombre(auxName, lenName)==1)
+		if(		!utn_ingresarAlfabetica(auxName, sizeName, "Ingrese nombre de cliente: ", "ERROR, ingrese un dato valido", REINTENTOS)
+				&& validaciones_esNombre(auxName, sizeName)==1)
 		{
-			strncpy(namee, auxName, lenName);
+			strncpy(name, auxName, sizeName);
 			retorno = 1;
 		}
 	}
 	return retorno;
-} */
+}
+
+/*
+ * \breif interactua con el usuario para solicitar el nombre del cliente
+ * \param listPassenger recibe el array dentro del cual se encuentra el elemento
+ * \param unaPosicion Recibe por valor el indice sobre el cual se asignara el dato
+ * \param name[] Recibe por referencia el array sobre el cual trabajara
+ * \param sizeName tamaño del array de name
+ * \return retorna -1 si hubo un error en los parametros recibidos
+ * 		   retorna 0 si recibio los parametros correctamente
+ * 		   retorna 1 si opero exitosamente
+ *
+ */
+int passenger_getLastName(char lastName[], int sizeName)
+{
+	int retorno;
+	char auxlastName [sizeName];
+	retorno =-1;
+	if(lastName!= NULL && sizeName>0)
+	{
+		retorno = 0;
+		if(		!utn_ingresarAlfabetica(auxlastName, sizeName, "Ingrese apellido de cliente: ", "ERROR, ingrese un dato valido", REINTENTOS)
+				&& validaciones_esNombre(auxlastName, sizeName)==1)
+		{
+			strncpy(lastName, auxlastName, sizeName);
+			retorno = 1;
+		}
+	}
+	return retorno;
+}
 
 /** \brief find a Passenger by Id en returns the index position in array.
 *
@@ -177,8 +238,9 @@ int passenger_print(ePassenger* listPassenger, int sizeListPassenger)
 			{
 				printf("id\tnombre\t\tapellido\tprecio\t\tcodigo vuelo\ttipo pasajero\n");
 			}
-			if(esDistintoDeInicial(listPassenger[i].isEmpty, VALUE_INIT))
+			if(esDistintoDeInicial(listPassenger[i].isEmpty,IS_EMPTY))
 			{
+				printf("DEBUG** print pasajeros\n");
 				passenger_printOnePosition(listPassenger, i);
 			}
 		}
@@ -195,7 +257,8 @@ int passenger_printOnePosition(ePassenger* listPassenger, int onePosition)
 	{
 		retorno = 0;
 
-		printf("%s %14s %10.2f %10s %10d\n",
+		printf("DEBUG*** print un pasajero\n");
+		printf("%s %s %10.2f %10s %10d\n",
 						listPassenger[onePosition].name,
 						listPassenger[onePosition].lastName,
 						listPassenger[onePosition].price,

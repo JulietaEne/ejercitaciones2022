@@ -335,3 +335,22 @@ int ordenarFormaDecreciente(int* numeroA, int* numeroB)
 	}
 	return retorno;
 }*/
+
+/**
+ * \brief valida si el numero a analizar es distinto del numero con el que se compara
+ * \param numeroAnalizar Recibe por valor el dato al cual analizara
+ * \param inicialCompare Recibe por valor el dato contra el cual se compara
+ * \return Retorna 0 si es falso
+ * 				   1 si es verdadero
+ *
+ */
+int estaVacio(int isEmpty, int valorInicial)
+{
+	int retorno;
+	retorno = 0;
+	if(isEmpty == valorInicial)
+	{
+		retorno = 1;
+	}
+	return retorno;
+}
