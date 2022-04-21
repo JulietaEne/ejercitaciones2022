@@ -93,12 +93,11 @@ int passenger_addPassenger(ePassenger* listPassenger, int sizeListPassenger, int
 	if( listPassenger!= NULL && sizeListPassenger >0 && name != NULL)// && lastName != NULL && flycode != NULL)
 	{
 		retorno=0;
-		//tiene que recorrer el array hasta encontrar el primer espacio libre
+		//tiene que recorrer el array hasta encontrar el primer espacio libre (DESPUES HACER FUNCION !!)
 		for (i=0; i<sizeListPassenger; i++)
 		{
 			if(estaVacio(listPassenger[i].isEmpty, IS_EMPTY))//si está libre, cargo los elementos recibidos por parametro
 			{
-				//printf("DEBUG**** i=%d -name: %s - lastame: %s\n",i, name, lastName);
 				strncpy(listPassenger[i].name, name, SIZE_STR);
 				strncpy(listPassenger[i].lastName, lastName, SIZE_STR);
 				listPassenger[i].id = id;//este id proviene de una variable autoincremental
@@ -106,13 +105,12 @@ int passenger_addPassenger(ePassenger* listPassenger, int sizeListPassenger, int
 				listPassenger[i].typePassenger = typePassenger;
 				strncpy(listPassenger[i].flycode, flycode, SIZE_CODE);
 				listPassenger[i].isEmpty = NOT_EMPTY;
-				//printf("DEBUG**** i=%d -name: %s - lastame: %s\n",i, listPassenger[i].name, listPassenger[i].lastName);
+				break;
 			}
 			else
 			{
 				tp_MensajeError("No hay espacio para nuevas cargas");
 			}
-			break;
 		}
 	}
 	return retorno;
@@ -224,7 +222,7 @@ int passenger_getFlyCode(char* oneFlyCode, int sizeCode)
 		retorno = 0;
 		if(!utn_getAlfaNumerica(auxOneFlyCode, sizeCode, "ingrese codigo de vuelo: ", "ingrese un codigo valido", REINTENTOS))//QUE HAY QUE TENER EN CUENTA PARA VALIDAR EL CODIGO ????
 		{
-			//si el codigo responde a la validacion de un codigo de vuelo
+			array_convertirStringMayuscula(auxOneFlyCode, sizeCode);
 			strncpy(oneFlyCode, auxOneFlyCode, sizeCode);
 			retorno=1;
 		}

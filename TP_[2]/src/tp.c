@@ -166,7 +166,7 @@ int continuar(char* mensaje)
 	char respuesta;
 	retorno = 0;
 
-	printf("%s\nOpcion: ", mensaje);
+	printf("%s Su respuesta: ", mensaje);
 	__fpurge(stdin);
 	scanf("%c", &respuesta);
 	if(respuesta == 'Y' || respuesta == 'y')

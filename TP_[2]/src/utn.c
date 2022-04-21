@@ -224,7 +224,7 @@ int utn_GetNumeroInt(int* pRespuesta, char* mensaje, char* mensajeError, int min
 				retorno = 0;
 				break; //porque ya no precisaría continuar el bucle do-while ya que llegué al caso de éxito
 			}
-			printf("%s", mensajeError);
+			printf("[ERROR] %s. ", mensajeError);
 			reintentos--;
 		}while(reintentos >= 0);
 	}
@@ -263,7 +263,7 @@ int utn_GetNumeroFloat(float* pRespuesta, char* mensaje, char* mensajeError, flo
 				retorno = 0;
 				break;
 			}
-			printf("%s", mensajeError);
+			printf("[ERROR] %s. ", mensajeError);
 			reintentos--;
 		}while(reintentos >= 0);
 	}
@@ -302,7 +302,7 @@ int utn_GetChar(char* pRespuesta, char* mensaje, char* mensajeError, char minimo
 				retorno = 0;
 				break; //porque ya no precisaría continuar el bucle do-while ya que llegué al caso de éxito, entonces rompe el bucle de iteracion y continúa con la linea de código siguiente al do
 			}
-				printf("%s", mensajeError);
+				printf("[ERROR] %s. ", mensajeError);
 				reintentos--;
 		}while(reintentos >= 0);
 	}
@@ -335,7 +335,7 @@ int utn_ingresarAlfabetica(char pArray[], int len, char* mensaje, char* mensajeE
 
 		do{
 			retorno=0;
-			printf("\n%s", mensaje);
+			printf("%s", mensaje);
 			//printf("reintentos actuales: %d\n", reintentos);
 			myGets_prueba(pArray, len);
 			if(strlen(pArray)<2)
@@ -343,7 +343,7 @@ int utn_ingresarAlfabetica(char pArray[], int len, char* mensaje, char* mensajeE
 			   retorno=-1;
 				reintentos--;
 				//printf("\n caracter: %c",pArray[i]);
-				printf("\n%s", mensajeError);
+				printf("[ERROR] %s. ", mensajeError);
 			}
 			for (i=0; i<strlen(pArray); i++)
 			{
@@ -353,7 +353,7 @@ int utn_ingresarAlfabetica(char pArray[], int len, char* mensaje, char* mensajeE
 					   retorno=-1;
 						reintentos--;
 						//printf("\n caracter: %c",pArray[i]);
-						printf("\n%s", mensajeError);
+						printf("[ERROR] %s. ", mensajeError);
 						break;
 			   }
 			}
