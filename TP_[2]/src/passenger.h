@@ -26,8 +26,8 @@ int passenger_getLastName(char lastName[], int sizeName);
 float passenger_getPrice(float* onePrice);
 int passenger_getFlyCode(char* oneFlyCode, int sizeCode);
 int passenger_getTypePassenger(int* oneTypePassenger);
-/*int findPassengerById(Passenger* list, int len,int id);
-int removePassenger(Passenger* list, int len, int id);
+int findPassengerById(ePassenger* listPassenger, int sizeListPassenger, int idRecibido);
+/*int removePassenger(Passenger* list, int len, int id);
 int sortPassengers(Passenger* list, int len, int order);*/
 int passenger_print(ePassenger* listPassenger, int sizeListPassenger);
 int passenger_printOnePosition(ePassenger* listPassenger, int onePosition);

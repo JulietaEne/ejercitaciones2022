@@ -261,14 +261,29 @@ int passenger_getTypePassenger(int* oneTypePassenger)
 * \param list Passenger*
 * \param len int
 * \param id int
-* \return Return passenger index position or (-1) if [Invalid length or
-NULL pointer received or passenger not found]
-*
-
-int findPassengerById(Passenger* list, int len,int id)
+* \return Return passenger index position
+* 				 (-1) if [Invalid length or NULL pointer received or passenger not found]
+*				-2 si no encontro ningun passenger con el id indicado
+*/
+int findPassengerById(ePassenger* listPassenger, int sizeListPassenger, int idRecibido)
 {
-	return NULL;
-}*/
+	int indexEncontrado;
+	int i;
+	indexEncontrado = -1;
+	if(listPassenger!= NULL && sizeListPassenger>0)
+	{
+		indexEncontrado=-2;
+		for(i=0; i<sizeListPassenger; i++)
+		{
+			if(listPassenger[i].id == idRecibido && listPassenger[i].isEmpty == NOT_EMPTY)
+			{
+				indexEncontrado=i;
+			}
+		}
+
+	}
+	return indexEncontrado;
+}
 
 /** \brief Remove a Passenger by Id (put isEmpty Flag in 1)
 *
