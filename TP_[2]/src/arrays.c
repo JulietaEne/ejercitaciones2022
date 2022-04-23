@@ -668,3 +668,93 @@ int array_visualizarApellidoNombre(char nombre[], char apellido[], char apellido
 	return retorno;
 }
 
+int array_eliminarEspaciosExtra(char unString[], int sizeString)
+{
+	int retorno;
+	int i;
+	int j;
+	retorno = -1;
+	if(unString != NULL && sizeString >0)
+	{
+		retorno = 0;
+		for(i = 0; i < sizeString; i++)
+		{
+			if(unString[i]== ' ')
+			{
+				while(unString[i+1]== ' ')
+				{
+					retorno=1;
+					for(j = i; j < sizeString; j++)
+					{
+						unString[j]=unString[j+1];
+					}
+				}
+			}
+		}
+	}
+	return retorno;
+}
+
+int array_eliminarEspaciosAdelante(char unString[], int sizeString)
+{
+	int retorno;
+	int i;
+	int j;
+	retorno = -1;
+	if(unString != NULL && sizeString > 0)
+	{
+		retorno = 0;
+		for(i = 0; i < sizeString; i++)
+		{
+			if(i==0)
+			{
+				while(unString[i]== ' ')
+				{
+					retorno = 1;
+					for(j = 0; j < sizeString; j++)
+					{
+						unString[j]=unString[j+1];
+					}
+				}
+			}
+		}
+	}
+
+	return retorno;
+}
+
+/*
+ * retorna -1 si hubo error en los parametros
+ * 		    0 si no elimino ningun espacio
+ * 		    >0 la cantidad de espacios que borró
+ *
+ *
+ */
+
+int array_eliminarTodosLosEspacios(char unString[], int sizeString)
+{
+	int retorno;
+	int i;
+	int j;
+	int contador;
+	retorno = -1;
+	contador = 0;
+	if(unString != NULL && sizeString > 0)
+	{
+		for(i = 0; i < sizeString; i++)
+		{
+			while(unString[i]== ' ')
+			{
+				for(j = i; j < sizeString; j++)
+				{
+					unString[j]=unString[j+1];
+					contador++
+				}
+			}
+		}
+		retorno = contador;
+	}
+
+	return retorno;
+}
+

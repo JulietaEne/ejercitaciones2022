@@ -19,8 +19,10 @@ struct
 }typedef ePassenger;
 
 int passenger_initArray(ePassenger* listPassenger, int sizeListPassenger);
-int passenger_initAPossition(ePassenger* listPassenger, int sizeListPassenger, int valorInicial);
-int passenger_addPassenger(ePassenger* listPassenger, int sizeListPassenger, int id, char name[],char lastName[],float price,int typePassenger, char flycode[]);
+int passenger_initAPossition(ePassenger* listPassenger, int indice, int valorInicial);
+int passenger_firstEmptyPosition(ePassenger* listPassenger, int sizeListPassenger);
+int passenger_getNew(ePassenger* listPassenger, int sizeListPassenger, int id);
+int passenger_addPassengerToArray(ePassenger* listPassenger, int sizeListPassenger, int id, char name[],char lastName[],float price,int typePassenger, char flycode[]);
 int passenger_getName(char name[], int sizeName);
 int passenger_getLastName(char lastName[], int sizeName);
 float passenger_getPrice(float* onePrice);
