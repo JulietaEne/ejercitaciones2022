@@ -62,6 +62,8 @@ int main(void) {
 					ultimoId++;
 					flagClientesCargados++;//indicará la cant de clientes cargados
 					passenger_print(arrayPasajeros, MAX_PASAJEROS);
+
+					//que pasa si no tengo más lugares?
 				}
 				else
 				{
@@ -69,10 +71,38 @@ int main(void) {
 				}
 				break;
 			case 2:
+				printf("MODIFICAR CLIENTES\n");
+				if(flagClientesCargados>0)
+				{
+					//tengo que pedir el ID del cliente que quiero modificar
+					//tengo que consultar qué dato deseo modificar
+					//ahora puedo modificar según lo seleccionado por el usuario
+				}
+				else
+				{
+					printf("[**ERROR**] Debe ingresar al menos un cliente para poder operar");
+				}
 				break;
 			case 3:
+				printf("BORRAR CLIENTES\n");
+				if(flagClientesCargados>0)
+				{
+					//tengo que pedir el ID del cliente que quiero eliminar
+					//tengo que pedir confirmacion
+					//coloco en .isEmpty = NOT_EMPTY  para un borrado logico
+				}
+				else
+				{
+					printf("[**ERROR**] Debe ingresar al menos un cliente para poder operar");
+				}
 				break;
 			case 4:
+				/*
+				 * 1. Listado de los pasajeros ordenados alfabéticamente por Apellido y Tipo de pasajero.
+				*	2. Total y promedio de los precios de los pasajes, y cuántos pasajeros superan el precio
+				*	promedio.
+				*	3. Listado de los pasajeros por Código de vuelo y estados de vuelos ‘ACTIVO’
+				 */
 				break;
 			case 5:
 				printf("saliendo....");
