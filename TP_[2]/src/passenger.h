@@ -23,12 +23,16 @@ int passenger_initAPossition(ePassenger* listPassenger, int indice, int valorIni
 int passenger_firstEmptyPosition(ePassenger* listPassenger, int sizeListPassenger);
 int passenger_getNew(ePassenger* listPassenger, int sizeListPassenger, int id);
 int passenger_addPassengerToArray(ePassenger* listPassenger, int sizeListPassenger, int id, char name[],char lastName[],float price,int typePassenger, char flycode[]);
+//int passenger_addPassengerToArray(ePassenger* listPassenger, int sizeListPassenger, int id, char name[],char lastName[],float price,int typePassenger, char flycode[]);
 int passenger_getName(char name[], int sizeName);
 int passenger_getLastName(char lastName[], int sizeName);
 float passenger_getPrice(float* onePrice);
 int passenger_getFlyCode(char* oneFlyCode, int sizeCode);
 int passenger_getTypePassenger(int* oneTypePassenger);
-int findPassengerById(ePassenger* listPassenger, int sizeListPassenger, int idRecibido);
+int passenger_modifyName(ePassenger* listPassenger, int indexCarga, int sizeName);
+int passenger_modifyNameOpcionDos(char campoNombre[], int sizeName);
+
+int passenger_findPassengerById(ePassenger* listPassenger, int sizeListPassenger, int idRecibido);
 /*int removePassenger(Passenger* list, int len, int id);
 int sortPassengers(Passenger* list, int len, int order);*/
 int passenger_print(ePassenger* listPassenger, int sizeListPassenger);

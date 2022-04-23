@@ -354,3 +354,23 @@ int estaVacio(int isEmpty, int valorInicial)
 	}
 	return retorno;
 }
+
+/**
+ * \brief valida si la variable recibida contiene un valor identico al del segundo parámetro
+ * \param variable Recibe por valor la variable que sera analizada
+ * \param valor Recibe por valor el dato contra el cual se compara
+ * \return Retorna 0 si es falso
+ * 				   1 si es verdadero
+ *
+ */
+int tp_sonIdenticos(int variable, int valor)
+{
+	int retorno;
+	retorno = 0;
+	if(variable == valor)
+	{
+		retorno = 1;
+	}
+	return retorno;
+}
+

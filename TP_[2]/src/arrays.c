@@ -748,7 +748,7 @@ int array_eliminarTodosLosEspacios(char unString[], int sizeString)
 				for(j = i; j < sizeString; j++)
 				{
 					unString[j]=unString[j+1];
-					contador++
+					contador++;
 				}
 			}
 		}

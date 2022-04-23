@@ -34,7 +34,8 @@ int convertirAMinuscula(char* caracter);
 int esPositivo(int numero);
 int esPar(int numero);
 int esDistintoDeInicial(int numeroAnalizar, int inicialCompare);
-int estaVacio(int isEmpty, int valorInicial);
+//int estaVacio(int isEmpty, int valorInicial);
+int tp_sonIdenticos(int variable, int valor);
 
 //int intercambiarValor(int* a, int* b);
 

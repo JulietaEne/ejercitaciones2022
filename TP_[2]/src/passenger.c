@@ -169,7 +169,7 @@ int passenger_getNew(ePassenger* listPassenger, int sizeListPassenger, int id)
 			&& passenger_getTypePassenger(&tipoPasajero)>0
 			)
 		{
-			passenger_addPassenger(listPassenger, sizeListPassenger, id, nombre, apellido, precio, tipoPasajero, codigoVuelo);
+			passenger_addPassengerToArray(listPassenger, sizeListPassenger, id, nombre, apellido, precio, tipoPasajero, codigoVuelo);
 			retorno = 0;
 		}
 	}
@@ -322,7 +322,59 @@ int passenger_getTypePassenger(int* oneTypePassenger)
 	return auxType;
 }
 ////////////////////////***************GETTERS***************////////////////////////
+////////////////////////***************MODIFY***************////////////////////////
+/*
+ * \breif interactua con el usuario para solicitar el nombre del cliente
+ * \param listPassenger recibe el array dentro del cual se encuentra el elemento
+ * \param unaPosicion Recibe por valor el indice sobre el cual se asignara el dato
+ * \param name[] Recibe por referencia el array sobre el cual trabajara
+ * \param sizeName tamaño del array de name
+ * \return retorna -1 si hubo un error en los parametros recibidos
+ * 		   retorna -2 si hubo un error en la interaccion con el usuario
+ * 		   retorna 0 si opero exitosamente
+ *
+ */
+int passenger_modifyName(ePassenger* listPassenger, int indexCarga, int sizeName)
+{
+	int retorno;
+	char auxName [sizeName];
+	retorno =-1;
+	if(listPassenger!= NULL && sizeName>0 && indexCarga>=0)
+	{
+		retorno = -2;
+		if(		!utn_ingresarAlfabetica(auxName, sizeName, "Ingrese nombre de cliente: ", "ERROR, ingrese un dato valido", REINTENTOS)
+				&& validaciones_esNombre(auxName, sizeName)==1)
+		{
+			strncpy(listPassenger[indexCarga].name, auxName, sizeName);
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
 
+int passenger_modifyNameOpcionDos(char campoNombre[], int sizeName)
+{
+	int retorno;
+	char auxName[sizeName];
+	retorno = -1;
+	if(campoNombre!= NULL && sizeName>0)
+	{
+		retorno = -2;
+		if(utn_ingresarAlfabetica(auxName, sizeName, "Ingrese nombre de cliente: ", "ERROR, ingrese un dato valido", REINTENTOS)
+				&& validaciones_esNombre(auxName, sizeName))
+		{
+			strncpy(campoNombre, auxName, sizeName);
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+
+
+
+
+////////////////////////***************MODIFY***************////////////////////////
 /** \brief find a Passenger by Id en returns the index position in array.
 *
 * \param list Passenger*
@@ -332,7 +384,7 @@ int passenger_getTypePassenger(int* oneTypePassenger)
 * 				 (-1) if [Invalid length or NULL pointer received or passenger not found]
 *				-2 si no encontro ningun passenger con el id indicado
 */
-int findPassengerById(ePassenger* listPassenger, int sizeListPassenger, int idRecibido)
+int passenger_findPassengerById(ePassenger* listPassenger, int sizeListPassenger, int idRecibido)
 {
 	int indexEncontrado;
 	int i;
@@ -342,15 +394,18 @@ int findPassengerById(ePassenger* listPassenger, int sizeListPassenger, int idRe
 		indexEncontrado=-2;
 		for(i=0; i<sizeListPassenger; i++)
 		{
-			if(listPassenger[i].id == idRecibido && listPassenger[i].isEmpty == NOT_EMPTY)
+			if(tp_sonIdenticos(listPassenger[i].isEmpty, NOT_EMPTY) && tp_sonIdenticos(listPassenger[i].id, idRecibido))
 			{
 				indexEncontrado=i;
+				printf("DEBUG******* index: %d\n", i);
 			}
 		}
 
 	}
 	return indexEncontrado;
 }
+
+
 
 /** \brief Remove a Passenger by Id (put isEmpty Flag in 1)
 *
@@ -399,7 +454,7 @@ int passenger_print(ePassenger* listPassenger, int sizeListPassenger)
 		retorno = 0;
 		for(i=0; i<sizeListPassenger; i++)
 		{
-			if(esDistintoDeInicial(listPassenger[i].isEmpty,IS_EMPTY))
+			if(!tp_sonIdenticos(listPassenger[i].isEmpty,IS_EMPTY))
 			{
 				if(i==0)
 				{

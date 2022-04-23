@@ -31,6 +31,9 @@ int main(void) {
 	int ultimoId;
 	int menuPrincipal;
 	int flagClientesCargados;
+	int idSolicitado;
+	int indexIdSolicitado;
+	int menuSecundario;
 
 	/*char oneName[SIZE_STR];//={"julieta"};
 	char oneLastName[SIZE_STR];//={"nakasone"};
@@ -47,21 +50,24 @@ int main(void) {
 	flagClientesCargados = -1;//no hay clientes cargados ni se inicializó el array
 	do
 	{
-		menuPrincipal = tp_ImprimirMenuSeisOpciones("\nPROGRAMA NAKASONE JULIETA:", "1) ALTAS", "2) MODIFICAR", "3) BAJA", "4) INFORMES", "5) SALIR", "6) \n");
+		menuPrincipal = tp_ImprimirMenuSeisOpciones("\nPROGRAMA:", "1) ALTAS", "2) MODIFICAR", "3) BAJA", "4) INFORMES", "5) SALIR", "\n");
 		switch(menuPrincipal)
 		{
 			case 1:
 				printf("ALTA DE CLIENTES\n");
 				if(!passenger_getNew(arrayPasajeros, MAX_PASAJEROS, ultimoId))
 				{
+					printf("DEBUG**** clientes cargados : %d\n", flagClientesCargados);
 					if(flagClientesCargados == -1)
 					{
 						passenger_initArray(arrayPasajeros, MAX_PASAJEROS);
 						flagClientesCargados=0;//no hay clientes cargados pero se inicializó el array
+						printf("DEBUG**** clientes cargados : %d\n", flagClientesCargados);
 					}
 					ultimoId++;
 					flagClientesCargados++;//indicará la cant de clientes cargados
 					passenger_print(arrayPasajeros, MAX_PASAJEROS);
+					printf("DEBUG**** ultimo ID : %d - clientes cargados : %d\n", ultimoId, flagClientesCargados);
 
 					//que pasa si no tengo más lugares?
 				}
@@ -75,7 +81,49 @@ int main(void) {
 				if(flagClientesCargados>0)
 				{
 					//tengo que pedir el ID del cliente que quiero modificar
-					//tengo que consultar qué dato deseo modificar
+					utn_GetNumeroInt(&idSolicitado, "Ingrese el ID del cliente que desea modificar", "ingrese un ID valido", ID_INICIAL, ID_MAXIMO, REINTENTOS);
+					if(idSolicitado <= ultimoId)
+					{
+						indexIdSolicitado = passenger_findPassengerById(arrayPasajeros, MAX_PASAJEROS, idSolicitado);//mostrar qué cliente es
+						printf("**DEBUG***id: %d - index: %d\n", idSolicitado, indexIdSolicitado);
+						//tengo que consultar qué dato deseo modificar
+						do
+						{
+							menuSecundario = tp_ImprimirMenuSeisOpciones("\nMODIFICAR", "1) Nombre", "2) Apellido", "3) Precio", "4) FlyCode", "5) TypePassenger", "6) Volver atras");
+							switch (menuSecundario)
+							{
+								case 1:
+									//cambio nombre
+									passenger_modifyName(arrayPasajeros, indexIdSolicitado, SIZE_STR);
+									printf("modify 1-> campo nombre: %s", arrayPasajeros[indexIdSolicitado].name);
+
+									passenger_modifyNameOpcionDos(arrayPasajeros[indexIdSolicitado].name, SIZE_STR);
+									printf("modify 2-> campo nombre: %s", arrayPasajeros[indexIdSolicitado].name);
+									break;
+								case 2:
+									//cambio APELLIDO
+									break;
+								case 3:
+									//cambio precio
+									break;
+								case 4:
+									//cambio codigovuelo
+									break;
+								case 5:
+									//cambio tipo cliente
+									break;
+								case 6:
+									//sale
+									break;
+							}
+						}while(menuSecundario!=6);
+					}
+					else
+					{
+						tp_MensajeError("El dato ingresado no corresponde a un ID válido");//podria hacer un desea repetir?
+					}
+
+
 					//ahora puedo modificar según lo seleccionado por el usuario
 				}
 				else
